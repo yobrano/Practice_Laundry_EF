@@ -5,7 +5,12 @@ VisualStudioVersion = 17.7.34003.232
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Laundry", "Laundry\Laundry.csproj", "{3E17618F-5D8E-4D01-8B69-D514AB50B5BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaundryTester", "LaundryTester\LaundryTester.csproj", "{63E507DF-3D3A-449D-BA1E-FA828877980E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LaundryTester", "LaundryTester\LaundryTester.csproj", "{63E507DF-3D3A-449D-BA1E-FA828877980E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F393E4EE-CA3A-4290-B488-6EA2BEBEE38F}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
