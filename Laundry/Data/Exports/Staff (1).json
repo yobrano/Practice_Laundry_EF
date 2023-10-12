@@ -1,0 +1,23 @@
+[
+  {
+    "Id": 1,
+    "UserId": 1,
+    "User": {
+      "Id": 1,
+      "FirstName": "Brian",
+      "MiddleName": "Mburu",
+      "LastName": "Murigi",
+      "Role": "developer",
+      "Email": null,
+      "MobileNo": null,
+      "DOB": null,
+      "Country": null,
+      "County": null,
+      "City": null,
+      "Estate": null,
+      "Town": null
+    },
+    "JobTitle": "owner",
+    "Tickets": null
+  }
+]

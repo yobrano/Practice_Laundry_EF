@@ -1,0 +1,42 @@
+[
+  {
+    "Id": 1,
+    "UserId": 2,
+    "User": {
+      "Id": 2,
+      "FirstName": "Sharon",
+      "MiddleName": "Wambui",
+      "LastName": "Mutegi",
+      "Role": "user",
+      "Email": "sharonmutegi2017@gmail.com",
+      "MobileNo": "0790327855",
+      "DOB": "1999-11-11T00:00:00",
+      "Country": "Kenya",
+      "County": "Nairobi",
+      "City": "Nairobi",
+      "Estate": "Sunton",
+      "Town": "Kasarani"
+    },
+    "Tickets": null
+  },
+  {
+    "Id": 2,
+    "UserId": 2,
+    "User": {
+      "Id": 2,
+      "FirstName": "Sharon",
+      "MiddleName": "Wambui",
+      "LastName": "Mutegi",
+      "Role": "user",
+      "Email": "sharonmutegi2017@gmail.com",
+      "MobileNo": "0790327855",
+      "DOB": "1999-11-11T00:00:00",
+      "Country": "Kenya",
+      "County": "Nairobi",
+      "City": "Nairobi",
+      "Estate": "Sunton",
+      "Town": "Kasarani"
+    },
+    "Tickets": null
+  }
+]
