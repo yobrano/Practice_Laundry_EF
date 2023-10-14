@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Laundry.Migrations
 {
     [DbContext(typeof(LaundryDBContext))]
-    [Migration("20231011080121_RenamedDBLaundry")]
-    partial class RenamedDBLaundry
+    [Migration("20231013215516_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,12 +32,6 @@ namespace Laundry.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("DeliveryLocation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MobileNo")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -64,12 +58,12 @@ namespace Laundry.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("price")
+                    b.Property<decimal?>("Price")
                         .HasColumnType("decimal(6, 2)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Service");
+                    b.ToTable("LaundryService");
                 });
 
             modelBuilder.Entity("Laundry.Models.Staff", b =>
@@ -107,6 +101,12 @@ namespace Laundry.Migrations
 
                     b.Property<int?>("CustomerId")
                         .HasColumnType("int");
+
+                    b.Property<string>("DropoffLocation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PickupLocation")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("StaffId")
                         .HasColumnType("int");
@@ -174,25 +174,25 @@ namespace Laundry.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Estate")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("MiddleName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("MobileNo")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Role")
                         .IsRequired()
@@ -202,6 +202,17 @@ namespace Laundry.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasFilter("[Email] IS NOT NULL");
+
+                    b.HasIndex("MobileNo")
+                        .IsUnique()
+                        .HasFilter("[MobileNo] IS NOT NULL");
+
+                    b.HasIndex("FirstName", "MiddleName", "LastName")
+                        .IsUnique();
 
                     b.ToTable("User");
                 });

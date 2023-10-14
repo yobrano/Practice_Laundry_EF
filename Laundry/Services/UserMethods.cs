@@ -6,14 +6,14 @@ using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Runtime.InteropServices;
 
-namespace Laundry.Service
+namespace Laundry.Services
 {
-    public class UserService
+    public class UserMethods
     {
         LaundryDBContext Context;
         LaundryFileManager FileManger = new LaundryFileManager();
 
-        public UserService(LaundryDBContext context) {
+        public UserMethods(LaundryDBContext context) {
             this.Context = context;
         }
         

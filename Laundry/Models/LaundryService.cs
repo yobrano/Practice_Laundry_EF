@@ -9,7 +9,7 @@ namespace Laundry.Models
         public string Label { get; set; } = null!;
         public string? Description { get; set; }
         [Column(TypeName="decimal(6, 2)")]
-        public decimal? price { get; set; }
+        public decimal? Price { get; set; }
 
     }
 }

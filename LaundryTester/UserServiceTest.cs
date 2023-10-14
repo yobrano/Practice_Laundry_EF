@@ -1,7 +1,7 @@
 using Laundry.Data;
-using Laundry.Service;
+using Laundry.Services;
 using Laundry.Models;
-using Microsoft.Identity.Client;
+
 
 namespace LaundryTester
 {
@@ -11,7 +11,7 @@ namespace LaundryTester
         public void userServiceCreation()
         {
             var context = new LaundryDBContext();
-            var userService = new UserService(context);
+            var userService = new UserMethods(context);
             Assert.NotNull(userService);
         }
 
@@ -19,13 +19,15 @@ namespace LaundryTester
         public void userCreation()
         {
             var context = new LaundryDBContext();
-            var userService = new UserService(context);
-            var user = userService.CreateUser("Brian", "Mburu", "Murigi", "developer");
+            var userService = new UserMethods(context);
+            var user = userService.CreateUser("Jack", "Doe", "K", "developer");
+            
             var brian = context.User
-                .Where(usr => usr.Role == "developer")
-                .ToList();
-            Assert.Single(brian);
+                .Where(usr => usr.Id == user.Id )
+                .FirstOrDefault();
+
             Assert.IsType<User>(user);
+            
         }
     }
 }

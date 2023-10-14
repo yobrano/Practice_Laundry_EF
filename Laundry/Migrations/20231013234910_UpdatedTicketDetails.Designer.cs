@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Laundry.Migrations
 {
     [DbContext(typeof(LaundryDBContext))]
-    [Migration("20231010222715_ChangeContext")]
-    partial class ChangeContext
+    [Migration("20231013234910_UpdatedTicketDetails")]
+    partial class UpdatedTicketDetails
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,12 +33,6 @@ namespace Laundry.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("DeliveryLocation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MobileNo")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -49,7 +43,7 @@ namespace Laundry.Migrations
                     b.ToTable("Customer");
                 });
 
-            modelBuilder.Entity("Laundry.Models.Service", b =>
+            modelBuilder.Entity("Laundry.Models.LaundryService", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -64,12 +58,12 @@ namespace Laundry.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("price")
+                    b.Property<decimal?>("Price")
                         .HasColumnType("decimal(6, 2)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Service");
+                    b.ToTable("LaundryService");
                 });
 
             modelBuilder.Entity("Laundry.Models.Staff", b =>
@@ -108,6 +102,12 @@ namespace Laundry.Migrations
                     b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
+                    b.Property<string>("DropoffLocation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PickupLocation")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("StaffId")
                         .HasColumnType("int");
 
@@ -132,23 +132,29 @@ namespace Laundry.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("EndTime")
+                    b.Property<DateTime?>("EndTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ServiceId")
+                    b.Property<int>("Index")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LaundryServiceId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("TicketNoId")
+                    b.Property<int>("TicketId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ServiceId");
+                    b.HasIndex("LaundryServiceId");
 
-                    b.HasIndex("TicketNoId");
+                    b.HasIndex("TicketId");
+
+                    b.HasIndex("Index", "TicketId")
+                        .IsUnique();
 
                     b.ToTable("TicketDetail");
                 });
@@ -174,25 +180,25 @@ namespace Laundry.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Estate")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("MiddleName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("MobileNo")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Role")
                         .IsRequired()
@@ -202,6 +208,17 @@ namespace Laundry.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasFilter("[Email] IS NOT NULL");
+
+                    b.HasIndex("MobileNo")
+                        .IsUnique()
+                        .HasFilter("[MobileNo] IS NOT NULL");
+
+                    b.HasIndex("FirstName", "MiddleName", "LastName")
+                        .IsUnique();
 
                     b.ToTable("User");
                 });
@@ -241,21 +258,21 @@ namespace Laundry.Migrations
 
             modelBuilder.Entity("Laundry.Models.TicketDetail", b =>
                 {
-                    b.HasOne("Laundry.Models.Service", "Service")
+                    b.HasOne("Laundry.Models.LaundryService", "LaundryService")
                         .WithMany()
-                        .HasForeignKey("ServiceId")
+                        .HasForeignKey("LaundryServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Laundry.Models.Ticket", "TicketNo")
+                    b.HasOne("Laundry.Models.Ticket", "Ticket")
                         .WithMany("TicketDetails")
-                        .HasForeignKey("TicketNoId")
+                        .HasForeignKey("TicketId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Service");
+                    b.Navigation("LaundryService");
 
-                    b.Navigation("TicketNo");
+                    b.Navigation("Ticket");
                 });
 
             modelBuilder.Entity("Laundry.Models.Customer", b =>

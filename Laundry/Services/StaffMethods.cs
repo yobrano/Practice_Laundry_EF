@@ -13,11 +13,11 @@ using System.Threading.Tasks;
 
 namespace Laundry.Services
 {
-    public class StaffService
+    public class StaffMethods
     {
         LaundryDBContext Context;
         LaundryFileManager FileManager = new LaundryFileManager();
-        public StaffService(LaundryDBContext context) 
+        public StaffMethods(LaundryDBContext context) 
         {
             this.Context = context;
         }

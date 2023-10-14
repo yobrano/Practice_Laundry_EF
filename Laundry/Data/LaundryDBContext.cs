@@ -10,12 +10,12 @@ namespace Laundry.Data
         public DbSet<Customer> Customer { get; set; } = null!;
         public DbSet<Ticket> Ticket { get; set; } = null!;
         public DbSet<TicketDetail> TicketDetail { get; set; } = null!;
-        public DbSet<LaundryService> Service { get; set; } = null!;
+        public DbSet<LaundryService> LaundryService { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // From microsoft connection server 
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=Laundry;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\ProjectModels;Database=Laundry;Trusted_Connection=True;");
         }
     }
 }

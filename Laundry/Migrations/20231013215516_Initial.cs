@@ -12,18 +12,18 @@ namespace Laundry.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Service",
+                name: "LaundryService",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Label = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    price = table.Column<decimal>(type: "decimal(6,2)", nullable: true)
+                    Price = table.Column<decimal>(type: "decimal(6,2)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Service", x => x.Id);
+                    table.PrimaryKey("PK_LaundryService", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -32,12 +32,12 @@ namespace Laundry.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    MiddleName = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MobileNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    MobileNo = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     DOB = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     County = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -56,9 +56,7 @@ namespace Laundry.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    DeliveryLocation = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MobileNo = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -99,6 +97,8 @@ namespace Laundry.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TicketNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DropoffLocation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PickupLocation = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CustomerId = table.Column<int>(type: "int", nullable: true),
                     StaffId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -132,9 +132,9 @@ namespace Laundry.Migrations
                 {
                     table.PrimaryKey("PK_TicketDetail", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TicketDetail_Service_ServiceId",
+                        name: "FK_TicketDetail_LaundryService_ServiceId",
                         column: x => x.ServiceId,
-                        principalTable: "Service",
+                        principalTable: "LaundryService",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -174,6 +174,26 @@ namespace Laundry.Migrations
                 name: "IX_TicketDetail_TicketNoId",
                 table: "TicketDetail",
                 column: "TicketNoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_Email",
+                table: "User",
+                column: "Email",
+                unique: true,
+                filter: "[Email] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_FirstName_MiddleName_LastName",
+                table: "User",
+                columns: new[] { "FirstName", "MiddleName", "LastName" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_MobileNo",
+                table: "User",
+                column: "MobileNo",
+                unique: true,
+                filter: "[MobileNo] IS NOT NULL");
         }
 
         /// <inheritdoc />
@@ -183,7 +203,7 @@ namespace Laundry.Migrations
                 name: "TicketDetail");
 
             migrationBuilder.DropTable(
-                name: "Service");
+                name: "LaundryService");
 
             migrationBuilder.DropTable(
                 name: "Ticket");
